@@ -59,7 +59,8 @@ app.route(prefix + '/user/login')
   .post(user.loginUser);
 
 app.route(prefix + '/users')
-  .get(user.getUsers);
+  .get(user.getUsers)
+  .post(user.postUser);
 
 app.route(prefix + '/users/:id')
   .get(user.getUser)
