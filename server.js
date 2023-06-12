@@ -4,6 +4,7 @@ const path = require('path');
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
 let user = require('./routes/users');
+let matiere = require('./routes/matieres');
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
@@ -43,7 +44,7 @@ let port = process.env.PORT || 8010;
 
 // les routes
 const prefix = '/api';
-
+////devoirs
 app.route(prefix + '/assignments')
   .get(assignment.getAssignments)
   .post(assignment.postAssignment)
@@ -53,6 +54,7 @@ app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
 
+//////users
 app.route(prefix + '/user/login')
   .post(user.loginUser);
 
@@ -62,6 +64,16 @@ app.route(prefix + '/users')
 app.route(prefix + '/users/:id')
   .get(user.getUser)
   .delete(user.deleteUser);
+
+//////matieres
+app.route(prefix + '/matieres')
+  .get(matiere.getMatieres)
+  .post(matiere.postMatiere)
+  .put(matiere.updateMatiere);
+
+app.route(prefix + '/matieres/:id')
+  .get(matiere.getMatiere)
+  .delete(matiere.deleteMatiere);
 
 app.use(express.static(path.join(__dirname, 'dist/assignment-app')));
 app.use('/*',function(req, res){
