@@ -41,11 +41,14 @@ function getUser(req, res){
 //authentification user
 function loginUser(req, res){
     let userEmail = req.body.email;
-    let userMdp = req.body.mdp;
-    User.findOne({email : userEmail, mdp : userMdp}, (err, user) =>{
-        if(err){res.send(err)}
+    let userMdp = req.body.password;
+    console.log(userEmail + "/" + userMdp);
+    User.findOne({ email: userEmail, password : userMdp }, (err, user) => {
+        if (err) {
+          res.send(err);
+        }
         res.json(user);
-    })
+    });
 }
 
 // Ajout d'un user (POST)
