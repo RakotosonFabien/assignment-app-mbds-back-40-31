@@ -52,9 +52,10 @@ function loginUser(req, res){
 function postUser(req, res){
     let user = new User();
     user.id = req.body.id;
-    user.nom = req.body.nom;
-    user.dateDeRendu = req.body.dateDeRendu;
-    user.rendu = req.body.rendu;
+    user.nomComplet = req.body.nomComplet;
+    user.email = req.body.email;
+    user.password = req.body.password;
+    user.poste = req.body.poste;
 
     console.log("POST user reçu :");
     console.log(user)

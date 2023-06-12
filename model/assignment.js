@@ -4,9 +4,14 @@ var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 let AssignmentSchema = Schema({
     id: Number,
-    dateDeRendu: Date,
     nom: String,
-    rendu: Boolean
+    dateAttribution : Date,
+    remarque : String,
+    note : Number,
+    dateDeRendu: Date,
+    rendu: Boolean,
+    idEtudiant : Number,
+    idMatiere : Number
 });
 
 AssignmentSchema.plugin(aggregatePaginate);
