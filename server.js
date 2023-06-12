@@ -1,14 +1,15 @@
 let express = require('express');
 let app = express();
+const path = require('path');
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
-
+let user = require('./routes/users');
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
 
 // remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud s
-const uri = 'mongodb+srv://mb:toto@cluster0.5e6cs7n.mongodb.net/assignments?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://rakotosonfabien:motdepasse123456@ekalymaster.mxrkl.mongodb.net/assignments?retryWrites=true&w=majority';
 
 const options = {
   useNewUrlParser: true,
@@ -51,12 +52,26 @@ app.route(prefix + '/assignments')
 app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
-  
 
+app.route(prefix + '/user/login')
+  .post(user.loginUser);
+
+app.route(prefix + '/users')
+  .get(user.getUsers);
+
+app.route(prefix + '/users/:id')
+  .get(user.getUser)
+  .delete(user.deleteUser);
+
+app.use(express.static(path.join(__dirname, 'dist/assignment-app')));
+app.use('/*',function(req, res){
+  res.sendFile(path.join(__dirname+'/dist/assignment-app/index.html'));
+});
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
+
+
+
 console.log('Serveur démarré sur http://localhost:' + port);
 
 module.exports = app;
-
-
