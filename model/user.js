@@ -4,7 +4,7 @@ var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 let UserSchema = Schema({
     id: Number,
-    nomComplet: String,
+    nom_complet: String,
     email: String,
     password: String,
     poste : String

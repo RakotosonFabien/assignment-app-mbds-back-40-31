@@ -1,5 +1,5 @@
 let Assignment = require('../model/assignment');
-
+let assignmentComplet =  require('../model/assignmentComplet');
 // Récupérer tous les assignments (GET)
 function getAssignmentsSansPagination(req, res){
     Assignment.find((err, assignments) => {
@@ -12,9 +12,9 @@ function getAssignmentsSansPagination(req, res){
 }
 
 function getAssignments(req, res) {
-    var aggregateQuery = Assignment.aggregate();
+    var aggregateQuery = assignmentComplet.aggregate();
     
-    Assignment.aggregatePaginate(aggregateQuery,
+    assignmentComplet.aggregatePaginate(aggregateQuery,
       {
         page: parseInt(req.query.page) || 1,
         limit: parseInt(req.query.limit) || 10,
@@ -23,6 +23,7 @@ function getAssignments(req, res) {
         if (err) {
           res.send(err);
         }
+        console.log("Tsy misy erreurs ary kou");
         res.send(assignments);
       }
     );
