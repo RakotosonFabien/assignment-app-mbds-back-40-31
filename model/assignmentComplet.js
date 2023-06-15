@@ -10,7 +10,12 @@ let AssignmentCompletSchema = Schema({
     note : Number,
     dateDeRendu: Date,
     rendu: Boolean,
-    idEtudiant : Number,
+    etudiant : {
+        id : Number,
+        nom_complet : String,
+        email : String,
+        poste : String
+    },
     matiere : {
         id : Number,
         nom : String
