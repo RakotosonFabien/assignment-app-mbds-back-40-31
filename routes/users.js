@@ -1,10 +1,12 @@
 let User = require('../model/user');
 let bcrypt = require('bcryptjs');
+let jwt = require('jsonwebtoken');
+var config = require('../config');
 
 // Récupérer tous les assignments (GET)
-function getUsersSansPagination(req, res){
+function getUsersSansPagination(req, res) {
     User.find((err, user) => {
-        if(err){
+        if (err) {
             res.send(err)
         }
 
@@ -14,39 +16,39 @@ function getUsersSansPagination(req, res){
 
 function getUsers(req, res) {
     var aggregateQuery = User.aggregate();
-    
+
     User.aggregatePaginate(aggregateQuery,
-      {
-        page: parseInt(req.query.page) || 1,
-        limit: parseInt(req.query.limit) || 10,
-      },
-      (err, user) => {
-        if (err) {
-          res.send(err);
+        {
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10,
+        },
+        (err, user) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(user);
         }
-        res.send(user);
-      }
     );
-   }
-   
+}
+
 // Récupérer un user par son id (GET)
-function getUser(req, res){
+function getUser(req, res) {
     let userID = req.params.id;
 
-    User.findOne({id: userID}, (err, user) =>{
-        if(err){res.send(err)}
+    User.findOne({ id: userID }, (err, user) => {
+        if (err) { res.send(err) }
         res.json(user);
     })
 }
 
 //authentification user
-function loginUser(req, res){
+function loginUser(req, res) {
     let userEmail = req.body.email;
-    User.findOne({ email: userEmail}, (err, user) => {
+    User.findOne({ email: userEmail }, (err, user) => {
         if (err) {
-          res.send(err);
+            res.send(err);
         }
-        if(!bcrypt.compareSync(req.body.password, user.password)){
+        if (!bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(401).send({ auth: false, token: null });
         }
         res.json(user);
@@ -54,7 +56,7 @@ function loginUser(req, res){
 }
 
 // Ajout d'un user (POST)
-function postUser(req, res){
+function postUser(req, res) {
     let user = new User();
     user.id = req.body.id;
     user.nom_complet = req.body.nom_complet;
@@ -65,28 +67,32 @@ function postUser(req, res){
     console.log("POST user reçu :");
     console.log(user)
 
-    user.save( (err) => {
-        if(err){
+    user.save((err) => {
+        if (err) {
             res.send('cant post user ', err);
         }
-        res.json({ message: `${user.nom} saved!`})
-    })
+        var token = jwt.sign({ id: user._id }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+        });
+
+        res.status(200).send({ auth: true, token: token });
+    });
 }
 
 // Update d'un user (PUT)
 function updateUser(req, res) {
     console.log("UPDATE recu user : ");
     console.log(req.body);
-    
-    User.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, user) => {
+
+    User.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, user) => {
         if (err) {
             console.log(err);
             res.send(err)
         } else {
-          res.json({message: user.nom + 'updated'})
+            res.json({ message: user.nom + 'updated' })
         }
 
-      // console.log('updated ', user)
+        // console.log('updated ', user)
     });
 
 }
@@ -98,11 +104,11 @@ function deleteUser(req, res) {
         if (err) {
             res.send(err);
         }
-        res.json({message: `${user.nom} deleted`});
+        res.json({ message: `${user.nom} deleted` });
     })
 }
 
-function hashPassword(password){
+function hashPassword(password) {
     return bcrypt.hashSync(password, 8);
 }
 
