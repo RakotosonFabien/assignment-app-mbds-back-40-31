@@ -1,4 +1,5 @@
 let User = require('../model/user');
+let bcrypt = require('bcryptjs');
 
 // Récupérer tous les assignments (GET)
 function getUsersSansPagination(req, res){
@@ -41,11 +42,12 @@ function getUser(req, res){
 //authentification user
 function loginUser(req, res){
     let userEmail = req.body.email;
-    let userMdp = req.body.password;
-    console.log(userEmail + "/" + userMdp);
-    User.findOne({ email: userEmail, password : userMdp }, (err, user) => {
+    User.findOne({ email: userEmail}, (err, user) => {
         if (err) {
           res.send(err);
+        }
+        if(!bcrypt.compareSync(req.body.password, user.password)){
+            return res.status(401).send({ auth: false, token: null });
         }
         res.json(user);
     });
@@ -55,9 +57,9 @@ function loginUser(req, res){
 function postUser(req, res){
     let user = new User();
     user.id = req.body.id;
-    user.nomComplet = req.body.nomComplet;
+    user.nom_complet = req.body.nom_complet;
     user.email = req.body.email;
-    user.password = req.body.password;
+    user.password = hashPassword(req.body.password);
     user.poste = req.body.poste;
 
     console.log("POST user reçu :");
@@ -100,6 +102,8 @@ function deleteUser(req, res) {
     })
 }
 
-
+function hashPassword(password){
+    return bcrypt.hashSync(password, 8);
+}
 
 module.exports = { getUsers, postUser, getUser, updateUser, deleteUser, loginUser };
