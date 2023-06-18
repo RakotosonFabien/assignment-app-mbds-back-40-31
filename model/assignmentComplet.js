@@ -3,6 +3,7 @@ let Schema = mongoose.Schema;
 var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 let AssignmentCompletSchema = Schema({
+    _id : String,
     id: Number,
     nom: String,
     dateAttribution : Date,
