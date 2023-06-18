@@ -30,7 +30,27 @@ function getUsers(req, res) {
         }
     );
 }
+function getEtudiants(req, res) {
+    var aggregateQuery = User.aggregate([
+        {
+          $match: {
+            poste: "etudiant"
+          }
+        }
+      ]);
+      
+      User.aggregatePaginate(aggregateQuery, {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.limit) || 10,
+      }, (err, user) => {
+        if (err) {
+          res.send(err);
+        }
+        res.send(user);
+      });
+}
 
+  
 // Récupérer un user par son id (GET)
 function getUser(req, res) {
     let userID = req.params.id;
@@ -112,4 +132,4 @@ function hashPassword(password) {
     return bcrypt.hashSync(password, 8);
 }
 
-module.exports = { getUsers, postUser, getUser, updateUser, deleteUser, loginUser };
+module.exports = { getUsers, postUser, getUser, updateUser, deleteUser, loginUser, getEtudiants };

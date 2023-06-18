@@ -62,6 +62,10 @@ app.route(prefix + '/users')
   .get(user.getUsers)
   .post(user.postUser);
 
+  app.route(prefix + '/users/etudiants')
+  .get(user.getEtudiants);
+
+
 app.route(prefix + '/users/:id')
   .get(user.getUser)
   .delete(user.deleteUser);
