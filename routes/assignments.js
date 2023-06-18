@@ -43,7 +43,7 @@ function getAssignment(req, res){
 function postAssignment(req, res){
     let assignment = new Assignment();
     assignment.id = req.body.id;
-    assignment.nom = req.body.nom;
+    assignment.nom_complet = req.body.nom_complet;
     // assignment.dateAttribution = req.body.dateAttribution; Atao date actuel
     assignment.remarque = req.body.remarque;
     assignment.note = req.body.note;
@@ -59,7 +59,7 @@ function postAssignment(req, res){
         if(err){
             res.send('cant post assignment ', err);
         }
-        res.json({ message: `${assignment.nom} saved!`})
+        res.json({ message: `${assignment.nom_complet} saved!`})
     })
 }
 
@@ -73,7 +73,7 @@ function updateAssignment(req, res) {
             console.log(err);
             res.send(err)
         } else {
-          res.json({message: assignment.nom + 'updated'})
+          res.json({message: assignment.nom_complet + 'updated'})
         }
 
       // console.log('updated ', assignment)
