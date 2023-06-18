@@ -68,6 +68,9 @@ function loginUser(req, res) {
         if (err) {
             res.send(err);
         }
+        if(user == null){
+            return res.status(401).send({ auth: false, token: null });
+        }
         if (!bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(401).send({ auth: false, token: null });
         }
