@@ -97,7 +97,6 @@ function rendreAssignment(req, res) {
             if(assignment!=null){
                 res.json({message: assignment.nom + 'rendu et updated'})
             }
-            res.json("Devoir introuvable");
         }
 
       // console.log('updated ', assignment)
