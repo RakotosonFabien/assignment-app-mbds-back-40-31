@@ -86,7 +86,7 @@ function postUser(req, res) {
     user.email = req.body.email;
     user.password = hashPassword(req.body.password);
     user.poste = req.body.poste;
-
+    
     console.log("POST user reçu :");
     console.log(user)
 

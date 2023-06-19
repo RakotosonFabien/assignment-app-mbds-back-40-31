@@ -7,7 +7,8 @@ let UserSchema = Schema({
     nom_complet: String,
     email: String,
     password: String,
-    poste : String
+    poste : String,
+    image : String
 });
 
 UserSchema.plugin(aggregatePaginate);
