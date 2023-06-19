@@ -54,6 +54,9 @@ app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
 
+app.route(prefix + '/rendredevoir')
+  .get(assignment.rendreAssignment);
+
 //////users
 app.route(prefix + '/user/login')
   .post(user.loginUser);

@@ -81,6 +81,29 @@ function updateAssignment(req, res) {
 
 }
 
+//rendre un assignment
+function rendreAssignment(req, res) {
+    console.log(" Rendre assignment : " + req.query.id);
+    var update = {
+        note : req.query.note,
+        dateDeRendu : new Date(),
+        rendu : true
+    };
+    Assignment.findByIdAndUpdate(req.query.id, update, {new: true}, (err, assignment) => {
+        if (err) {
+            console.log(err);
+            res.send(err)
+        } else {
+            if(assignment!=null){
+                res.json({message: assignment.nom + 'rendu et updated'})
+            }
+            res.json("Devoir introuvable");
+        }
+
+      // console.log('updated ', assignment)
+    });
+
+}
 // suppression d'un assignment (DELETE)
 function deleteAssignment(req, res) {
 
@@ -94,4 +117,4 @@ function deleteAssignment(req, res) {
 
 
 
-module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment, rendreAssignment };
