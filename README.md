@@ -61,7 +61,8 @@ Allez ensuite sur http://localhost:4200/
 	email => email => prof3@gmail.com
 	password => 123456
 
-#Etudiants(1,2,3)
+#Etudiants(1,2,3,fabien,antonio)
+	
 	email => email => etudiant1@gmail.com
 	password => 123456
 
@@ -69,4 +70,10 @@ Allez ensuite sur http://localhost:4200/
 	password => 123456
 
 	email => email => etudiant3@gmail.com
+	password => 123456
+
+	email => email => fabien@gmail.com
+	password => 123456
+
+	email => email => antonio@gmail.com
 	password => 123456
