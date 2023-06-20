@@ -47,5 +47,26 @@ Allez ensuite sur http://localhost:4200/
 
 #Infos
 #Description admin
-email => admin@gmail.com
-password => 123456
+	email => admin@gmail.com
+	password => 123456
+
+
+#Professeurs (1,2,3)
+	email => email => prof1@gmail.com
+	password => 123456
+
+	email => email => prof2@gmail.com
+	password => 123456
+
+	email => email => prof3@gmail.com
+	password => 123456
+
+#Etudiants(1,2,3)
+	email => email => etudiant1@gmail.com
+	password => 123456
+
+	email => email => etudiant2@gmail.com
+	password => 123456
+
+	email => email => etudiant3@gmail.com
+	password => 123456
