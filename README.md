@@ -47,5 +47,5 @@ Allez ensuite sur http://localhost:4200/
 
 #Infos
 #Description admin
-email => admin@example.com
+email => admin@gmail.com
 password => 123456
